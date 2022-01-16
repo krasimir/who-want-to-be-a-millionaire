@@ -1,0 +1,102 @@
+body {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2em;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+}
+* {
+  box-sizing: border-box;
+}
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.container img {
+  max-width: 100%;
+}
+.ui {
+  position: relative;
+}
+h1 {
+  position: absolute;
+  top: 34vw;
+  width: 70%;
+  left: 14%;
+  text-align: center;
+  font-size: 1.8vw;
+  font-weight: normal;
+  line-height: 1.1em;
+}
+.option {
+  position: absolute;
+  border: none;
+  background: none;
+  width: 400px;
+  height: 44px;
+  color: #fff;
+  font-size: 1em;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 30px;
+}
+.optionA {
+  bottom: 11vw;
+  left: 10vw;
+}
+.optionB {
+  bottom: 11vw;
+  left: 51vw;
+}
+.optionC {
+  bottom: 6.4vw;
+  left: 10vw;
+}
+.optionD {
+  bottom: 6.4vw;
+  left: 51vw;
+}
+.option50 {
+  position: absolute;
+  border: none;
+  background: none;
+  width: 70px;
+  height: 44px;
+  color: #fff;
+  font-size: 1em;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 12px;
+  top: 4vw;
+  left: 34vw;
+}
+.message {
+  width: 400px;
+  border-radius: 20px;
+  background: #000;
+  position: absolute;
+  left: 50%;
+  top: 120px;
+  margin-left: -200px;
+  padding: 1em;
+  text-align: center;
+  display: none;
+}
+.message p {
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+.message a {
+  text-decoration: none;
+  display: inline-block;
+  background: #00286d;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}
