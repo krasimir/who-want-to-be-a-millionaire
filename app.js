@@ -1,31 +1,13 @@
-const DATA = {
-  a: [
-    {
-      question: 'Кой от следните е приятел на мечо пух?',
-      answers: [
-        'Батман',
-        'Кристофар Робин',
-        'Донатело',
-        'Стефани'
-      ],
-      valid: 1
-    },
-    {
-      question: 'Колко са въпросите в стани богат?',
-      answers: [
-        10,
-        2,
-        16,
-        15
-      ],
-      valid: 3
-    }
-  ]
-}
-
 window.addEventListener('load', function() {
-  const variant = 'a';
+  const urlParams = new URLSearchParams(window.location.search);
+  const variant = urlParams.get('v');
   const questions = DATA[variant];
+  let block = false;
+
+  if (!questions) {
+    message('Missing "?v=" parameter. Possible values: a, b');
+  }
+
   let currentQuestion = 0;
   const question = document.querySelector('h1');
   const optionA = document.querySelector('.optionA');
@@ -37,10 +19,16 @@ window.addEventListener('load', function() {
   
   options.forEach(el => {
     el.addEventListener('click', (e) => {
+      if (block) return;
+      block = true;
       const index = Number(e.target.getAttribute('data-index'));
       if (index === questions[currentQuestion].valid) {
         e.target.setAttribute('style', 'background:rgba(0, 200, 0, 0.6);');
-        message('<p>Следващ въпрос?</p><a href="javascript:showNextQuestion()">OK</a>');
+        if (currentQuestion === DATA[variant].length - 1) {
+          message('<p>Ти победи, честито! Нова игра?</p><a href="javascript:startOver()">OK</a>');
+        } else {
+          message('<p>Браво! Следващ въпрос.</p><a href="javascript:showNextQuestion()">OK</a>');
+        }
       } else {
         e.target.setAttribute('style', 'background:rgba(200, 0, 0, 0.6);');
         options[questions[currentQuestion].valid].setAttribute('style', 'background:rgba(0, 200, 0, 0.6);');
@@ -49,6 +37,7 @@ window.addEventListener('load', function() {
     });
   });
   option50.addEventListener('click', () => {
+    if (block) return;
     const current = questions[currentQuestion];
     let wrongAnswers = current.answers.filter((a, i) => i !== current.valid);
     const toKeep = wrongAnswers[getRandomInt(3)];
@@ -61,16 +50,13 @@ window.addEventListener('load', function() {
   });
 
   function showQuestion() {
-    if (currentQuestion >= DATA[variant].length) {
-      message('<p>Ти победи, честито! Нова игра?</p><a href="javascript:startOver()">OK</a>');
-      return;
-    }
     options.forEach(el => el.setAttribute('style', ''))
     question.innerText = questions[currentQuestion].question;
     optionA.innerText = questions[currentQuestion].answers[0];
     optionB.innerText = questions[currentQuestion].answers[1];
     optionC.innerText = questions[currentQuestion].answers[2];
     optionD.innerText = questions[currentQuestion].answers[3];
+    updateStatus();
   }
   function message(html) {
     const el = document.querySelector('.message');
@@ -80,15 +66,20 @@ window.addEventListener('load', function() {
   function hideMessage() {
     document.querySelector('.message').setAttribute('style', 'display:none');
   }
+  function updateStatus() {
+    document.querySelector('.status').innerHTML = '<small>' + (currentQuestion+1) + '/' + DATA[variant].length + '</small>';
+  }
   window.showNextQuestion = function showNextQuestion() {
+    block = false;
     currentQuestion += 1;
-    showQuestion();
     hideMessage();
+    showQuestion();
   }
   window.startOver = function startOver() {
+    block = false;
     currentQuestion = 0;
-    showQuestion();
     hideMessage();
+    showQuestion();
   }
 
   showQuestion()
