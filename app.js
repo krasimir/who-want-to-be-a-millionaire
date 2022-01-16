@@ -1,12 +1,8 @@
 window.addEventListener('load', function() {
   const urlParams = new URLSearchParams(window.location.search);
-  const variant = urlParams.get('v');
+  const variant = urlParams.get('v') || 'c';
   const questions = DATA[variant];
   let block = false;
-
-  if (!questions) {
-    message('Missing "?v=" parameter. Possible values: a, b');
-  }
 
   let currentQuestion = 0;
   const question = document.querySelector('h1');
